@@ -4,8 +4,13 @@ import java.util.Scanner;
 
 public class App
 {
+
+
     public static void main( String[] args )
     {
+        LinkedList<Task> tasks = new LinkedList<>();
+        Queue<Task> scheduledTaks = new Queue<>();
+        Stack<Task> urgentTaks = new Stack<>();
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
 
@@ -18,13 +23,17 @@ public class App
             System.out.println("3. Find a task");
             System.out.println("4. See all your tasks");
             System.out.println("5. See all your pending tasks");
-            System.out.println("6. See your tasks ordered by urgency");
-            System.out.println("7. See your tasks ordered by department");
+            System.out.println("6. See your pending tasks ordered by urgency");
+            System.out.println("7. See your pending tasks ordered by department");
             System.out.println("8. Exit");
 
             int option = readInt(scanner, 1, 8);
 
             switch (option) {
+                case 1:
+                    Taskman.addTask(tasks, scanner);
+                    break;
+
                 case 8:
                     System.out.println("Thank you for using Taskman!");
                     running = false;
