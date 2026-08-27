@@ -4,7 +4,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class LinkedList<T> {
+public class LinkedList<T> implements Iterable<T> {
     Node<T> head;
     Node<T> tail;
     private int length;

@@ -3,7 +3,7 @@ package com.dev;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Queue<T> {
+public class Queue<T> implements Iterable<T> {
     private LinkedList<T> queue;
 
     public Queue() {

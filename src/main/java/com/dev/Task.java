@@ -12,7 +12,7 @@ public class Task {
     private Instant updated_at;
 
     public Task(String title, String department, Instant due_date) {
-        this.title = title,
+        this.title = title;
         this.department = department;
         this.urgency = Urgency.LOW;
         this.due_date = due_date;
@@ -21,7 +21,7 @@ public class Task {
     }
 
     public Task(String title, String department, Urgency urgency, Instant due_date) {
-        this.title = title,
+        this.title = title;
         this.department = department;
         this.urgency = urgency;
         this.due_date = due_date;

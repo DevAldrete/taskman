@@ -3,7 +3,7 @@ package com.dev;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Stack<T> {
+public class Stack<T> implements Iterable<T> {
     private LinkedList<T> stack;
 
     public Stack() {
