@@ -29,7 +29,7 @@ public class App
                     break;
 
                 case 4:
-                    System.out.println("\nThank you for using Taskman!");
+                    System.out.println("\nGracias por utilizar Taskman!");
                     running = false;
                     break;
             }
@@ -40,11 +40,11 @@ public class App
 
     private static void printMainMenu() {
         System.out.println("\n--- Taskman ---");
-        System.out.println("Welcome to Taskman, where the management of your tasks is as simple as selecting a few options.");
-        System.out.println("What do you wish me to do?");
-        System.out.println("1. Work with my general tasks");
-        System.out.println("2. Work with my scheduled tasks (daily routine)");
-        System.out.println("3. Work with my emergency tasks");
+        System.out.println("Bienvenido a Taskman, donde el manejo de tus tareas es tan simple como seleccionando algunas opciones.");
+        System.out.println("Que deseas que haga?");
+        System.out.println("1. Trabajar con mis tareas generales");
+        System.out.println("2. Trabajar con mis tareas rutinarias o programadas");
+        System.out.println("3. Trabajar con mis tareas de emergencia");
         System.out.println("4. Exit");
     }
 
@@ -60,13 +60,13 @@ public class App
                     break;
 
                 case 2:
-                    System.out.println("What's the title of the task you want to remove? ");
-                    Taskman.removeTask(tasks, scanner, scanner.nextLine());
+                    System.out.println("Cual es el id de la tarea que deseas remover? ");
+                    Taskman.removeTask(tasks, scanner, scanner.nextInt());
                     break;
 
                 case 3:
-                    System.out.println("What's the title of the task you want to find? ");
-                    Taskman.findTask(tasks, scanner, scanner.nextLine());
+                    System.out.println("Cual es el id de la tarea que deseas encontrar? ");
+                    Taskman.findTask(tasks, scanner, scanner.nextInt());
                     break;
 
                 case 4:
@@ -86,8 +86,8 @@ public class App
                     break;
 
                 case 8:
-                    System.out.println("What's the title of the task you completed? ");
-                    Taskman.markTaskDone(tasks, scanner, scanner.nextLine());
+                    System.out.println("Cual es el id de la tarea que completaste? ");
+                    Taskman.markTaskDone(tasks, scanner, scanner.nextInt());
                     break;
 
                 case 9:
@@ -98,16 +98,16 @@ public class App
     }
 
     private static void printGeneralMenu() {
-        System.out.println("\n-- General tasks --");
-        System.out.println("1. Add your task");
-        System.out.println("2. Remove a task");
-        System.out.println("3. Find a task");
-        System.out.println("4. See all your tasks");
-        System.out.println("5. See all your pending tasks");
-        System.out.println("6. See your pending tasks ordered by urgency");
-        System.out.println("7. See your pending tasks ordered by department");
-        System.out.println("8. Mark a task as done");
-        System.out.println("9. Back to the main menu");
+        System.out.println("\n-- Tareas Generales --");
+        System.out.println("1. Agregar una tarea");
+        System.out.println("2. Remover una tarea");
+        System.out.println("3. Encontrar una tarea");
+        System.out.println("4. Ve todas tus tareas");
+        System.out.println("5. Ve todas tus tareas pendientes");
+        System.out.println("6. Ve todas tus tareas pendientes ordenadas por urgencia");
+        System.out.println("7. Ve todas tus tareas pendientes ordenadas por departamento");
+        System.out.println("8. Marca una tarea como terminada");
+        System.out.println("9. Regresar al menu principal");
     }
 
     private static void scheduledTasksMenu(Queue<Task> scheduledTasks, Scanner scanner) {
@@ -137,11 +137,11 @@ public class App
     }
 
     private static void printScheduledMenu() {
-        System.out.println("\n-- Scheduled tasks (your daily routine) --");
-        System.out.println("1. Schedule a task for the day");
-        System.out.println("2. See my scheduled tasks");
-        System.out.println("3. Complete the next scheduled task");
-        System.out.println("4. Back to the main menu");
+        System.out.println("\n-- Tareas Rutinarias o Programadas --");
+        System.out.println("1. Programar una tarea");
+        System.out.println("2. Ver tus tareas programadas");
+        System.out.println("3. Completar la siguiente tarea programada");
+        System.out.println("4. Regresar al menu principal");
     }
 
     private static void emergencyTasksMenu(Stack<Task> emergencyTasks, Scanner scanner) {
@@ -171,18 +171,18 @@ public class App
     }
 
     private static void printEmergencyMenu() {
-        System.out.println("\n-- Emergency tasks --");
-        System.out.println("1. Store an emergency task");
-        System.out.println("2. See my emergency tasks");
-        System.out.println("3. Handle the most recent emergency");
-        System.out.println("4. Back to the main menu");
+        System.out.println("\n-- Tareas de Emergencia --");
+        System.out.println("1. Guardar una tarea de emergencia");
+        System.out.println("2. Ver mis tareas de emergencia");
+        System.out.println("3. Atender la tarea de emergencia mas reciente");
+        System.out.println("4. Regresar al menu principal");
     }
 
     private static int readInt(Scanner scanner, int min, int max) {
         int option = -1;
 
         do {
-            System.out.println("Select your option between " + min + " and " + max);
+            System.out.println("Selecciona una opcion entre " + min + " y " + max);
             try {
                 option = Integer.parseInt(scanner.nextLine().trim());
             } catch (NumberFormatException e) {

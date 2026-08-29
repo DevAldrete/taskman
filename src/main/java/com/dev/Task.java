@@ -3,7 +3,8 @@ package com.dev;
 import java.time.Instant;
 
 public class Task {
-    private String title;
+    private int id;
+	private String title;
     private String department;
     private boolean done;
     private Urgency urgency;
@@ -70,5 +71,13 @@ public class Task {
 	}
 	public void setUpdated_at(Instant updated_at) {
 		this.updated_at = updated_at;
+	}
+
+    public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 };
