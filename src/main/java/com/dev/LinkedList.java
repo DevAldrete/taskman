@@ -63,6 +63,15 @@ public class LinkedList<T> implements Iterable<T> {
         this.tail = this.tail.prev;
         this.length--;
 
+        if (this.tail == null) {
+            this.head = null;
+        } else {
+            this.tail.next = null;
+        }
+
+        poppedNode.prev = null;
+        poppedNode.next = null;
+
         return poppedNode.value;
     }
 
@@ -100,18 +109,22 @@ public class LinkedList<T> implements Iterable<T> {
             if (Objects.equals(curr.value, value)) {
                 this.length--;
 
-                if (curr == this.head) {
-                    this.head = this.head.next;
-                    return true;
+                // Actualizamos head o tail segun corresponda, cubriendo tambien el caso
+                // donde el nodo a remover es el unico en la lista (head == tail)
+                if (curr.prev != null) {
+                    curr.prev.next = curr.next;
+                } else {
+                    this.head = curr.next;
                 }
 
-                if (curr == this.tail) {
-                    this.tail = this.tail.prev;
-                    return true;
+                if (curr.next != null) {
+                    curr.next.prev = curr.prev;
+                } else {
+                    this.tail = curr.prev;
                 }
 
-                curr.prev.next = curr.next;
-                curr.next.prev = curr.prev;
+                curr.prev = null;
+                curr.next = null;
                 return true;
             }
             curr = curr.next;

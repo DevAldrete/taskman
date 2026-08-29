@@ -102,10 +102,12 @@ public class Taskman {
 
     // Tareas programadas utilizando Colas/Queue
 
-    // Agregar la tarea a programar utilizando la misma funcion de apoyo readTask para obtener la tarea del usuario de manera limpia
+    // Agregar la tarea a programar utilizando la funcion de apoyo readSimpleTask, en este caso no se
+    // pregunta por deadline ni urgencia ya que las tareas programadas se atienden en orden de llegada
+    // y no por fecha de entrega o prioridad
     public static void scheduleTask(Queue<Task> scheduled, Scanner scanner) {
         System.out.println("\nProgramando tarea para el dia...");
-        scheduled.enqueue(readTask(scanner));
+        scheduled.enqueue(readSimpleTask(scanner));
         System.out.println("Tarea programada exitosamente.");
     }
 
@@ -117,8 +119,8 @@ public class Taskman {
         printTasks(reversed(scheduled), "Tareas Programadas");
     }
 
-    // Esta funcion solo sirve para "marcar" como terminada la tarea que en teoria ya realizamos, por lo tanto la quitamos de la cola
-    // tambien nos permite saber si hay mas tareas por completar o si ya no hay ninguna
+    // Al atender la siguiente tarea programada la marcamos como terminada y la retiramos de la cola
+    // despues mostramos las tareas que quedan por atender para que el usuario siempre sepa cuanto le falta
     public static void completeNextScheduled(Queue<Task> scheduled) {
         if (scheduled.isEmpty()) {
             System.out.println("No hay tareas programadas por el momento.");
@@ -126,17 +128,23 @@ public class Taskman {
         }
 
         Task task = scheduled.dequeue();
-        System.out.println("Tarea programada ");
+        task.setDone(true);
+        task.setUpdated_at(Instant.now());
+
+        System.out.println("\nTarea programada completada:");
         printTask(task);
+
+        printScheduledTasks(scheduled);
     }
 
     // Tareas de emergencia con Pilas o Stacks
 
-    // Nos permite guardar una emergencia dada como tarea por parte del usuario con la funcion de apoyo readTask
+    // Nos permite guardar una emergencia dada como tarea por parte del usuario con la funcion de apoyo readSimpleTask
     // cabe recalcar que la emergencia se guarda como tarea pero la logica de la aplicacion no las tratara como tareas normales
+    // no se pregunta por deadline ni urgencia ya que las emergencias se atienden en orden de llegada inverso
     public static void storeEmergency(Stack<Task> emergencies, Scanner scanner) {
         System.out.println("\nGuardando tarea de emergencia..");
-        emergencies.push(readTask(scanner));
+        emergencies.push(readSimpleTask(scanner));
         System.out.println("Emergencia guardada exitosamente.");
     }
 
@@ -145,9 +153,8 @@ public class Taskman {
         printTasks(reversed(emergencies), "Tareas de Emergencia");
     }
 
-    // Manera de observar cual es la siguiente emergencia que debemos atender aprovechandonos de la logica de una pila
-    // es decir, la emergencia que llega al ultimo se atiende primero (LIFO), y tambien checamos si hay emergencias que atender
-    // de lo contrario se avisa al usuario
+    // Al atender la emergencia mas reciente la marcamos como terminada y la retiramos de la pila
+    // despues mostramos las emergencias que quedan por atender
     public static void handleNextEmergency(Stack<Task> emergencies) {
         if (emergencies.isEmpty()) {
             System.out.println("No hay mas emergencias que atender.");
@@ -155,15 +162,20 @@ public class Taskman {
         }
 
         Task task = emergencies.pop();
-        System.out.println("Handling emergency:");
+        task.setDone(true);
+        task.setUpdated_at(Instant.now());
+
+        System.out.println("\nEmergencia atendida:");
         printTask(task);
+
+        printEmergencies(emergencies);
     }
 
     // Funciones de apoyo para la logica de la app
 
     // Leemos la tarea del usuario utilizando el Scanner y ademas de utilizar la funcion readDueDate para leer correctamente la
     // fecha proveida por el usuario y no haya errores o crasheos en el programa
-    // Adeemas, se le pregunta al usuario si desea agregar un grado de urgencia por ellos mismos (el grado o nivel por default es MEDIUM
+    // Adeemas, se le pregunta al usuario si desea agregar un grado de urgencia por ellos mismos (el grado o nivel por default es LOW
     // o una tarea con urgencia medianamente importante), si asi lo desea, entonces utilizamos el otro constructor de la tarea que nos
     // permite ingresar el nivel de urgencia del usuario, ademas, utilizamos una funcion mas readUrgency para leer correctamente el
     // nivel o grado de urgencia del usuario, asi, si el usuario no desea agregar urgencia se utiliza el constructor que no ocupa que se
@@ -181,6 +193,19 @@ public class Taskman {
             return new Task(title, department, readUrgency(scanner), dueDate);
         }
         return new Task(title, department, dueDate);
+    }
+
+    // Similar a readTask pero simplificado, en este caso solo pide titulo y departamento
+    // Se utiliza para tareas programadas y de emergencia donde no tiene sentido pedir deadline ni nivel de urgencia ya que
+    // estas se atienden conforme llegan en un orden fijo
+    private static Task readSimpleTask(Scanner scanner) {
+        System.out.println("Cual es el titulo de tu tarea? ");
+        String title = scanner.nextLine();
+
+        System.out.println("Cual es el departamento a asignar? ");
+        String department = scanner.nextLine();
+
+        return new Task(title, department);
     }
 
     // Se le pide al usuario que ingrese una fecha con el formato dado como ejemplo en el prompt, y se intenta convertir de cadena de texto
@@ -240,15 +265,18 @@ public class Taskman {
 
     // Se muestra la tarea de manera formateada y limpia a la consola, con un truco que en este caso seria si la tarea esta terminada
     // entonces se muestra como marcada [x] de lo contrario se muestra como pendiente [ ]
+    // Ademas, como las tareas programadas y de emergencia no tienen deadline ni urgencia, mostramos "N/A" en esos campos
     private static void printTask(Task task) {
         String done = task.isDone() ? "[x]" : "[ ]";
-        System.out.printf("%i %s %-25s | %-15s | %-6s | %s%n",
+        String urgency = task.getUrgency() != null ? task.getUrgency().name() : "N/A";
+        String dueDate = task.getDue_date() != null ? dateFormatter.format(task.getDue_date().atZone(ZONE)) : "N/A";
+        System.out.printf("%d %s %-25s | %-15s | %-6s | %s%n",
                             task.getId(),
                             done,
                             task.getTitle(),
                             task.getDepartment(),
-                            task.getUrgency().name(),
-                            dateFormatter.format(task.getDue_date().atZone(ZONE)));
+                            urgency,
+                            dueDate);
     }
 
     // Se filtran las tareas que siguen pendientes en la lista de tareas que se pasan como argumento

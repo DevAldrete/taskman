@@ -3,6 +3,8 @@ package com.dev;
 import java.time.Instant;
 
 public class Task {
+    private static int nextId = 1;
+
     private int id;
 	private String title;
     private String department;
@@ -13,21 +15,27 @@ public class Task {
     private Instant updated_at;
 
     public Task(String title, String department, Instant due_date) {
+        this(title, department, Urgency.LOW, due_date);
+    }
+
+    public Task(String title, String department) {
+        this.id = nextId++;
         this.title = title;
         this.department = department;
-        this.urgency = Urgency.LOW;
-        this.due_date = due_date;
+        this.urgency = null;
+        this.due_date = null;
         this.created_at = Instant.now();
-        this.updated_at = Instant.now();
+        this.updated_at = this.created_at;
     }
 
     public Task(String title, String department, Urgency urgency, Instant due_date) {
+        this.id = nextId++;
         this.title = title;
         this.department = department;
         this.urgency = urgency;
         this.due_date = due_date;
         this.created_at = Instant.now();
-        this.updated_at = Instant.now();
+        this.updated_at = this.created_at;
     }
 
 	public String getTitle() {

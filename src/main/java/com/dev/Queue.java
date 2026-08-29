@@ -27,6 +27,9 @@ public class Queue<T> implements Iterable<T> {
     }
 
     public T peek() {
+        if (this.queue.isEmpty()) {
+            return null;
+        }
         return this.queue.tail.value;
     }
 

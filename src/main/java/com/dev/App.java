@@ -61,12 +61,12 @@ public class App
 
                 case 2:
                     System.out.println("Cual es el id de la tarea que deseas remover? ");
-                    Taskman.removeTask(tasks, scanner, scanner.nextInt());
+                    Taskman.removeTask(tasks, scanner, readId(scanner));
                     break;
 
                 case 3:
                     System.out.println("Cual es el id de la tarea que deseas encontrar? ");
-                    Taskman.findTask(tasks, scanner, scanner.nextInt());
+                    Taskman.findTask(tasks, scanner, readId(scanner));
                     break;
 
                 case 4:
@@ -87,7 +87,7 @@ public class App
 
                 case 8:
                     System.out.println("Cual es el id de la tarea que completaste? ");
-                    Taskman.markTaskDone(tasks, scanner, scanner.nextInt());
+                    Taskman.markTaskDone(tasks, scanner, readId(scanner));
                     break;
 
                 case 9:
@@ -176,6 +176,19 @@ public class App
         System.out.println("2. Ver mis tareas de emergencia");
         System.out.println("3. Atender la tarea de emergencia mas reciente");
         System.out.println("4. Regresar al menu principal");
+    }
+
+    // Leemos el id de una tarea desde la entrada estandar
+    // Se lee la linea completa (a diferencia de scanner.nextInt()) para no dejar el salto de linea en el buffer
+    // lo cual hacia que el menu se mostrara dos veces pidiendo la opcion al usuario
+    private static int readId(Scanner scanner) {
+        while (true) {
+            try {
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                System.out.println("Id invalido, por favor ingresa un numero entero.");
+            }
+        }
     }
 
     private static int readInt(Scanner scanner, int min, int max) {

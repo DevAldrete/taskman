@@ -27,6 +27,9 @@ public class Stack<T> implements Iterable<T> {
     }
 
     public T peek() {
+        if (this.stack.isEmpty()) {
+            return null;
+        }
         return this.stack.tail.value;
     }
 
