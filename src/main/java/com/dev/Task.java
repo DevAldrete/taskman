@@ -2,6 +2,11 @@ package com.dev;
 
 import java.time.Instant;
 
+/**
+ * Modelo de una tarea. Guarda su informacion (titulo, departamento,
+ * urgencia, fechas) y su estado de completado. El id se asigna
+ * automaticamente y de forma unica durante la ejecucion.
+ */
 public class Task {
     private static int nextId = 1;
 
@@ -28,6 +33,7 @@ public class Task {
         this.updated_at = this.created_at;
     }
 
+    /** Crea una tarea completa con urgencia, deadline y fechas de creacion/actualizacion. */
     public Task(String title, String department, Urgency urgency, Instant due_date) {
         this.id = nextId++;
         this.title = title;

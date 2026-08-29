@@ -3,6 +3,10 @@ package com.dev;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
+/**
+ * Cola (FIFO) generica basada en LinkedList: los elementos se atendienen
+ * en orden de llegada (el primero en entrar es el primero en salir).
+ */
 public class Queue<T> implements Iterable<T> {
     private LinkedList<T> queue;
 
@@ -14,18 +18,22 @@ public class Queue<T> implements Iterable<T> {
         return this.queue.isEmpty();
     }
 
+    /** Numero de elementos en la cola. */
     public int length() {
         return this.queue.length();
     }
 
+    /** Agrega un elemento al frente de la cola (primero en ser atendido). */
     public void enqueue(T value) {
         this.queue.prepend(value);
     }
 
+    /** Remueve y devuelve el elemento mas antiguo de la cola. */
     public T dequeue() {
         return this.queue.pop();
     }
 
+    /** Devuelve (sin remover) el elemento mas antiguo, o null si esta vacia. */
     public T peek() {
         if (this.queue.isEmpty()) {
             return null;

@@ -3,6 +3,10 @@ package com.dev;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
+/**
+ * Nivel de urgencia de una tarea. Cada valor tiene un nivel numerico
+ * (menor = mas urgente) y un nombre textual usado como entrada del usuario.
+ */
 public enum Urgency {
     ASAP(1, "asap"),
     HIGH(2, "high"),
@@ -17,10 +21,12 @@ public enum Urgency {
         this.level = level;
     }
 
+    /** Indica si esta urgencia es mas importante que 'other' (nivel menor). */
     public boolean isMoreImportantThan(Urgency other) {
         return this.level < other.level;
     }
 
+    /** Convierte una cadena de texto a Urgency. Lanza NoSuchElementException si no coincide. */
     public static Urgency fromStr(String str) {
         if (Objects.equals(str, "asap")) {
             return Urgency.ASAP;

@@ -2,6 +2,7 @@ package com.dev;
 
 import java.util.Scanner;
 
+// Punto de entrada de la aplicacion
 public class App
 {
     public static void main( String[] args )
@@ -48,6 +49,7 @@ public class App
         System.out.println("4. Exit");
     }
 
+    // Menu de tareas generales: delega cada opcion al modulo Taskman
     private static void generalTasksMenu(LinkedList<Task> tasks, Scanner scanner) {
         boolean inMenu = true;
 
@@ -110,6 +112,7 @@ public class App
         System.out.println("9. Regresar al menu principal");
     }
 
+    // Menu de tareas programadas
     private static void scheduledTasksMenu(Queue<Task> scheduledTasks, Scanner scanner) {
         boolean inMenu = true;
 
@@ -144,6 +147,7 @@ public class App
         System.out.println("4. Regresar al menu principal");
     }
 
+    // Menu de tareas de emergencia
     private static void emergencyTasksMenu(Stack<Task> emergencyTasks, Scanner scanner) {
         boolean inMenu = true;
 
@@ -191,6 +195,7 @@ public class App
         }
     }
 
+    // Lee un numero entero acotado entre min y max, pidiendo de nuevo si el valor es invalido.
     private static int readInt(Scanner scanner, int min, int max) {
         int option = -1;
 
